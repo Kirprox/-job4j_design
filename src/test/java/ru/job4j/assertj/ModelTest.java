@@ -12,6 +12,7 @@ class ModelTest {
         boolean result = model.isCondition();
         assertThat(result).isTrue();
     }
+
     @Test
     void checkStringChain() {
         Model model = new Model(1, 5.255d, "I am learning Java", true);
@@ -27,6 +28,7 @@ class ModelTest {
                 .endsWith("Java")
                 .isEqualTo("I am learning Java");
     }
+
     @Test
     void checkInt() {
         Model model = new Model(2, 5.2d, "name", true);
@@ -38,6 +40,7 @@ class ModelTest {
                 .isLessThan(3)
                 .isEqualTo(2);
     }
+
     @Test
     void checkDoubleChain() {
         Model model = new Model(1, 5.255d, "name", true);
