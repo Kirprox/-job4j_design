@@ -2,30 +2,30 @@ package ru.job4j.iterator;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class CyclicIterator<T> implements Iterator<T> {
 
     private List<T> data;
-    ListIterator<T> iterator;
+    private int index = 0;
 
     public CyclicIterator(List<T> data) {
         this.data = data;
-        this.iterator = data.listIterator();
     }
 
     @Override
     public boolean hasNext() {
-        if (!iterator.hasNext()) {
-            while (iterator.hasPrevious()) {
-                iterator.previous();
-            }
+        if (index == data.size()) {
+            index = 0;
         }
-        return iterator.hasNext();
+        return index < data.size();
     }
 
     @Override
     public T next() {
-        return iterator.next();
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        return data.get(index++);
     }
 }
