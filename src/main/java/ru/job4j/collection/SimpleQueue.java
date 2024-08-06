@@ -19,9 +19,6 @@ public class SimpleQueue<T> {
                 countElInput--;
             }
         }
-        if (countElOutput == 0 && countElInput == 0) {
-            throw new NoSuchElementException("Queue is empty");
-        }
         countElOutput--;
         return output.pop();
     }
