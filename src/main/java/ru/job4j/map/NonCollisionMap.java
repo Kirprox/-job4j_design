@@ -13,10 +13,10 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
     @Override
     public boolean put(K key, V value) {
         modCount++;
-        if ((float) count / (float) capacity >= LOAD_FACTOR) {
+        if (count >= LOAD_FACTOR * capacity) {
             expand();
         }
-        int index = indexFor(hash(Objects.hashCode(key)));
+        int index = calcIndex(key);
         boolean isPut = false;
         if (table[index] == null) {
             table[index] = new MapEntry<>(key, value);
@@ -28,16 +28,11 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
 
     @Override
     public V get(K key) {
-        int index = indexFor(hash(Objects.hashCode(key)));
+        int index = calcIndex(key);
         V result = null;
-
-        if (table[index] != null) {
-            if (Objects.hashCode(key) == Objects.hashCode(table[index].key)
-                    && Objects.equals(key, table[index].key)) {
-                result = table[index].value;
-            }
+        if (compareKeys(key)) {
+            result = table[index].value;
         }
-
         return result;
     }
 
@@ -45,14 +40,11 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
     public boolean remove(K key) {
         modCount++;
         boolean deleted = false;
-        int deleteIndex = indexFor(hash(Objects.hashCode(key)));
-        if (table[deleteIndex] != null) {
-            if (Objects.hashCode(key) == Objects.hashCode(table[deleteIndex].key)
-                    && Objects.equals(key, table[deleteIndex].key)) {
-                table[deleteIndex] = null;
-                deleted = true;
-                count--;
-            }
+        int deleteIndex = calcIndex(key);
+        if (compareKeys(key)) {
+            table[deleteIndex] = null;
+            deleted = true;
+            count--;
         }
         return deleted;
     }
@@ -95,19 +87,34 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
 
     private void expand() {
         capacity *= 2;
-        int index, hashCode;
         K key;
         V value;
         MapEntry<K, V>[] newTable = new MapEntry[capacity];
         for (MapEntry<K, V> entry : table) {
             if (entry != null) {
-                index = indexFor(hash(Objects.hashCode(entry.key)));
+                calcIndex(entry.key);
                 key = entry.key;
                 value = entry.value;
-                newTable[index] = new MapEntry<>(key, value);
+                newTable[calcIndex(key)] = new MapEntry<>(key, value);
                 table = newTable;
             }
         }
+    }
+
+    private int calcIndex(K key) {
+        return indexFor(hash(Objects.hashCode(key)));
+    }
+
+    private boolean compareKeys(K key) {
+        boolean result = false;
+        int index = calcIndex(key);
+        if (table[index] != null) {
+            if (Objects.hashCode(key) == Objects.hashCode(table[index].key)
+                    && Objects.equals(key, table[index].key)) {
+                result = true;
+            }
+        }
+        return result;
     }
 
     private static class MapEntry<K, V> {
