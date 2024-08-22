@@ -20,9 +20,8 @@ public class Config {
         StringJoiner output = new StringJoiner(System.lineSeparator());
         try (BufferedReader reader = new BufferedReader(new FileReader(this.path))) {
             reader.lines().
-                    filter(e -> e.contains("=")
-                    ).
-                    forEach(output::add);
+                    filter(e -> e.contains("=") && !e.startsWith("#"))
+                            .forEach(output::add);
         } catch (IOException e) {
             e.printStackTrace();
         }
