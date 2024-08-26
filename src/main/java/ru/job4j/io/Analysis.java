@@ -1,10 +1,9 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.*;
 
 public class Analysis {
-    public void unavailable(String source, String target) {
+    public static void unavailable(String source, String target) {
         String line;
         boolean started = false;
         try (BufferedReader reader = new BufferedReader(new FileReader(source));
@@ -18,7 +17,7 @@ public class Analysis {
                     output.print(pair[1] + ";");
                     started = true;
                 } else if ((condition == 300 || condition == 200) && started) {
-                    output.println(pair[1]);
+                    output.println(pair[1] + "\n");
                 }
             }
         } catch (IOException e) {
@@ -27,7 +26,6 @@ public class Analysis {
     }
 
     public static void main(String[] args) {
-        Analysis analysis = new Analysis();
-        analysis.unavailable("data/server.log", "data/target.csv");
+        unavailable("data/server.log", "data/target.csv");
     }
 }
