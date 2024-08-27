@@ -18,6 +18,7 @@ public class Analysis {
                     started = true;
                 } else if ((condition == 300 || condition == 200) && started) {
                     output.println(pair[1] + "\n");
+                    started = false;
                 }
             }
         } catch (IOException e) {
