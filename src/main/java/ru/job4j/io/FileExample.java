@@ -21,7 +21,6 @@ public class FileExample {
         System.out.println("Доступен для записи?: " + file.canWrite());
         System.out.println("Длина файла (в байтах): " + file.length());
 
-        // Переименование файла
         File newFile = new File("src/main/java/ru/job4j/io/files/newFile.txt");
         System.out.println("Переименование файла в newFile. Успешно?: " + file.renameTo(newFile));
     }
