@@ -19,9 +19,9 @@ public class Dir {
             try {
                 Path currentPath = Paths.get(subfile.getAbsolutePath());
                 System.out.println(subfile.getName());
-                Files.walkFileTree(currentPath, new FileVisitor());
-                System.out.println(FileVisitor.getSize());
-                FileVisitor.setSize(0);
+                FileVisitor visitor = new FileVisitor();
+                Files.walkFileTree(currentPath, visitor);
+                System.out.println(visitor.getSize());
                 System.out.println("------------------------");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -31,14 +31,10 @@ public class Dir {
 }
 
 class FileVisitor extends SimpleFileVisitor<Path> {
-    private static long size;
+    private long size;
 
-    public static long getSize() {
+    public long getSize() {
         return size;
-    }
-
-    public static void setSize(long size) {
-        FileVisitor.size = size;
     }
 
     @Override
