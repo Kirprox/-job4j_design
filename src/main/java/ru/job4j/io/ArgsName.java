@@ -29,20 +29,24 @@ public class ArgsName {
         String[] arguments = str.split("=", 2);
         String textErr = "Error: This argument '";
         if (arguments.length < 2) {
-            throw new IllegalArgumentException(String.format(
-                    "%s%s' does not contain an equal sign", textErr, arguments[0]));
+            textErr = String.format(
+                    "%s%s' does not contain an equal sign", textErr, arguments[0]);
+            throw new IllegalArgumentException(String.format(textErr));
         }
         if (arguments[0].length() <= 1) {
-            throw new IllegalArgumentException(String.format(
-                    "%s%s=%s' does not contain a key", textErr, arguments[0], arguments[1]));
+            textErr = String.format(
+                    "%s%s=%s' does not contain a key", textErr, arguments[0], arguments[1]);
+            throw new IllegalArgumentException(String.format(textErr));
         }
         if (!arguments[0].startsWith("-")) {
-            throw new IllegalArgumentException(String.format(
-                    "%s%s=%s' does not start with a '-' character", textErr, arguments[0], arguments[1]));
+            textErr = String.format(
+                    "%s%s=%s' does not start with a '-' character", textErr, arguments[0], arguments[1]);
+            throw new IllegalArgumentException(String.format(textErr));
         }
         if (arguments[1].isEmpty()) {
-            throw new IllegalArgumentException(String.format(
-                    "%s%s=%s' does not contain a value", textErr, arguments[0], arguments[1]));
+            textErr = String.format(
+                    "%s%s=%s' does not contain a value", textErr, arguments[0], arguments[1]);
+            throw new IllegalArgumentException(String.format(textErr));
         }
         return arguments;
     }
