@@ -26,14 +26,14 @@ public class ConsoleChat {
         Scanner reader = new Scanner(System.in);
         while (!exit) {
             String myWord = reader.nextLine();
-            if (myWord.equals(OUT)) {
+            if (OUT.equals(myWord)) {
                 exit = true;
                 chat.add(myWord);
                 continue;
             }
-            if (myWord.equals(STOP)) {
+            if (STOP.equals(myWord)) {
                 chat.add(myWord);
-                while (!myWord.equals(CONTINUE)) {
+                while (!CONTINUE.equals(myWord)) {
                     myWord = reader.nextLine();
                     chat.add(myWord);
                 }
