@@ -33,11 +33,21 @@ public class Zip {
         }
     }
 
+    private static void validateInput(Path root, String exclude, File target) {
+        if (exclude == null || !root.toFile().exists()) {
+            throw new IllegalArgumentException("Illegal input arguments!");
+        }
+        if (!target.toString().endsWith(".zip")) {
+            throw new IllegalArgumentException("illegal target argument!");
+        }
+    }
+
     public static void main(String[] args) {
         ArgsName argsName = ArgsName.of(args);
         Path root = Path.of(argsName.get("d"));
         String exclude = argsName.get("e");
         File target = new File(argsName.get("o"));
+        validateInput(root, exclude, target);
         List<Path> paths = Search.search(root, path ->
                 !path.toFile().getName().endsWith(exclude));
         Zip zipProject = new Zip();
