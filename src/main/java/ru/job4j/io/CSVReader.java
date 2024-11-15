@@ -42,7 +42,7 @@ public class CSVReader {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        if (output.toString().equals("stdout")) {
+        if ("stdout".equals(output.toString())) {
             System.out.println(result);
         } else {
             try (PrintWriter outputWriter = new PrintWriter(new BufferedOutputStream(
