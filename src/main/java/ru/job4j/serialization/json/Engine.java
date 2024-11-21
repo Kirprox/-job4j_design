@@ -21,4 +21,8 @@ public class Engine {
                 + "engDisplacement=" + engDisplacement
                 + '}';
     }
+
+    public double getEngDisplacement() {
+        return engDisplacement;
+    }
 }

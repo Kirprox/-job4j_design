@@ -24,6 +24,26 @@ public class Car {
     String[] subSystems;
     Engine engine;
 
+    public String getModel() {
+        return model;
+    }
+
+    public boolean isSportCar() {
+        return isSportCar;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public String[] getSubSystems() {
+        return subSystems;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
     public Car(String model, boolean isSportCar, int speed, String[] subSystems, Engine engine) {
         this.model = model;
         this.isSportCar = isSportCar;
