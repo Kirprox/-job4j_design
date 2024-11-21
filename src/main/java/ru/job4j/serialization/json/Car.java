@@ -3,8 +3,10 @@ package ru.job4j.serialization.json;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.*;
 
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
 
@@ -50,13 +52,18 @@ public class Car {
         JAXBContext context = JAXBContext.newInstance(Car.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
+        String result = "";
         try (StringWriter writer = new StringWriter()) {
             marshaller.marshal(car, writer);
-            String result = writer.getBuffer().toString();
+            result = writer.getBuffer().toString();
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(result)) {
+            Car unmarshalledCar = (Car) unmarshaller.unmarshal(reader);
+            System.out.println(unmarshalledCar);
         }
 
     }
