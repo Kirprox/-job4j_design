@@ -1,0 +1,10 @@
+select * from students where course > 2;
+select * from students where name like 'D%';
+select * from students where name like 'D%' and course > 2;
+select * from students where name like 'D%' or course > 2;
+select current_date;
+select current_date + interval '1 month';
+select * from students order by speciality;
+select * from students order by speciality desc;
+select  course from students;
+select * from students limit 5;
