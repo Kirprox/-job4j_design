@@ -7,18 +7,16 @@ create table products
     price    integer
 );
 
-create
-or replace function tax()
-    returns trigger as
+create or replace function tax()
+returns trigger as
 $$
     BEGIN
-        update products
-        set price = price + price * 0.2
-        where id = (select id from inserted)
+        new.price := NEW.price * 1.2;
         return new;
     END;
 $$
-LANGUAGE 'plpgsql';
+LANGUAGE plpgsql;
+
 
 create trigger tax_trigger
     after insert
