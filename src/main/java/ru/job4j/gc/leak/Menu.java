@@ -7,10 +7,10 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static final Integer ADD_POST = 1;
-    public static final Integer ADD_MANY_POST = 2;
-    public static final Integer SHOW_ALL_POSTS = 3;
-    public static final Integer DELETE_POST = 4;
+    public static final int ADD_POST = 1;
+    public static final int ADD_MANY_POST = 2;
+    public static final int SHOW_ALL_POSTS = 3;
+    public static final int DELETE_POST = 4;
 
     public static final String SELECT = "Выберите меню";
     public static final String COUNT = "Выберите количество создаваемых постов";
@@ -31,10 +31,12 @@ public class Menu {
         CommentGenerator commentGenerator = new CommentGenerator(random, userGenerator);
         Scanner scanner = new Scanner(System.in);
         PostStore postStore = new PostStore();
-        start(commentGenerator, scanner, userGenerator, postStore);
+        Menu menu = new Menu();
+        menu.start(commentGenerator, scanner, userGenerator, postStore);
     }
 
-    private static void start(CommentGenerator commentGenerator, Scanner scanner, UserGenerator userGenerator, PostStore postStore) {
+    private void start(CommentGenerator commentGenerator, Scanner scanner, UserGenerator userGenerator, PostStore postStore) {
+        CommentGenerator cG = commentGenerator;
         boolean run = true;
         while (run) {
             System.out.println(MENU);
@@ -48,7 +50,7 @@ public class Menu {
                 commentGenerator.generate();
                 var post = new Post();
                 post.setText(text);
-                post.setComments(CommentGenerator.getComments());
+                post.setComments(cG.getComments());
                 var saved = postStore.add(post);
                 System.out.println("Generate: " + saved.getId());
             } else if (ADD_MANY_POST == userChoice) {
@@ -88,11 +90,12 @@ public class Menu {
     private static void createPost(CommentGenerator commentGenerator,
                                    UserGenerator userGenerator,
                                    PostStore postStore, String text) {
+        CommentGenerator cG = commentGenerator;
         userGenerator.generate();
         commentGenerator.generate();
         var post = new Post();
         post.setText(text);
-        post.setComments(CommentGenerator.getComments());
+        post.setComments(cG.getComments());
         postStore.add(post);
     }
 }
