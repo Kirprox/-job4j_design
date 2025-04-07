@@ -8,6 +8,6 @@ public class Main {
         clonedObj.setY(20);
         System.out.println("Исходный объект. Х: " + obj.getX() + ", Y: " + obj.getY());
         System.out.println("Клонированный объект. Х: " + clonedObj.getX() + ", Y: " + clonedObj.getY());
-
+        System.out.println("goodbye");
     }
 }
