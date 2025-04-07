@@ -11,5 +11,3 @@
 - *2.5. Clean architecture*
 
 - *2.6. Algorithms in the interview*
-
-Объединение зафиксированных изменений
